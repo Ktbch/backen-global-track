@@ -3,13 +3,13 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
+console.log('hello')
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-console.log('hello')
 
 app.get("/", (req, res) => res.send("Backend is live"));
 
