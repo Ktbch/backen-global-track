@@ -3,7 +3,7 @@ dotenv.config();
 
 const AppConfig = {
     port: process.env.PORT || 3000,
-    dbUrl: process.env.DB_URL || '',
+    dbUrl: process.env.DATABASE_URL || '',
 }
 
 export default AppConfig;
