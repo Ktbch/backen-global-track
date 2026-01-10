@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../../../db";
-import { profiles } from "../../../db/schema";
+import { profiles, user_roles } from "../../../db/schema";
 
 
 type UserDto = {
@@ -27,6 +27,11 @@ export class UserRepository {
         return users[ 0 ] || ''
     }
     async findUserById (id: string) {
-        return await db.select().from(profiles).where(eq(profiles.id, id))
+        const users = await db.select().from(profiles).where(eq(profiles.id, id))
+        return users[ 0 ] || ''
+    }
+    async getUserRole (id: string) {
+        const userRole = await db.select({ role: user_roles.role }).from(user_roles).where(eq(user_roles.user_id, id))
+        return userRole[ 0 ] || ''
     }
 }
