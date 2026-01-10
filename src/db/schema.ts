@@ -12,7 +12,7 @@ export const paymentProvider = [ 'paystack', 'stripe', 'bank_transfer' ] as cons
 
 
 export const profiles = mysqlTable('profiles', {
-    id: varchar('id', { length: 36 }).primaryKey(), // UUID stored as string
+    id: varchar('id', { length: 36 }).primaryKey().notNull(), // UUID stored as string
     email: varchar('email', { length: 255 }).notNull(),
     password: varchar('password', { length: 26 }).notNull(),
     full_name: varchar('full_name', { length: 255 }),
@@ -31,7 +31,7 @@ export const profiles = mysqlTable('profiles', {
 
 export const user_roles = mysqlTable('user_roles', {
     id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
-    user_id: varchar('user_id', { length: 36 }).notNull(),
+    user_id: varchar('user_id', { length: 36 }).references(() => profiles.id).notNull(),
     role: varchar('role', { length: 36 }).notNull(),// Use TypeScript AppRole type
     assigned_by: varchar('assigned_by', { length: 36 }),
     assigned_at: timestamp('assigned_at').defaultNow(),
