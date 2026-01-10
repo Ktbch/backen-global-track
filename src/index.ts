@@ -4,15 +4,20 @@ import cors from "cors";
 import AppConfig from "./config.ts/config";
 import { AppErr } from "./utils/app-error";
 import { ResponseHandler } from "./utils/response-handler";
+import cookieParser from "cookie-parser";
 
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin: "*",
+    credentials: true
+}));
+
+app.use(cookieParser());
 app.use(express.json());
 
 
-
-app.get("/", (req, res) => res.send("Backend is live"));
 
 const port = Number(AppConfig.port);
 
