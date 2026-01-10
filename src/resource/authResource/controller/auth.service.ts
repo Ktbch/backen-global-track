@@ -42,9 +42,7 @@ export class AuthService {
         return token
     }
 
-    async logOut (payload: JwtPayload) {
 
-    }
     async getLoogedInUser (userPayload: JwtPayload) {
         const { id } = userPayload
         const userFound = await this.userRepository.findUserById(id)
