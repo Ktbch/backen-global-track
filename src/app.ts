@@ -18,6 +18,10 @@ app.use(cookieParser());
 app.use(express.json());
 
 
+
+app.get("/hello", (req, res) => {
+    res.send("API is running...");
+});
 app.use('/api/v1', authRoute);
 
 
