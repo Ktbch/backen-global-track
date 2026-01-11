@@ -11,7 +11,7 @@ import { UnAuthorisedRequestError } from "../../../utils/app-error";
 
 
 
-
+// handling sql and transforming erros her
 
 export class AuthController {
 
@@ -21,13 +21,13 @@ export class AuthController {
         this.authService = new AuthService()
     }
 
+
     // using arrow function o preserve the this key word so it can be safely passed in callbacks
     handleSignUp = async (req: Request, res: Response, next: NextFunction) => {
         try
         {
             await this.authService.signUp(req.body as createAccountDto)
             ResponseHandler.success(res, 'Your Sign-up was succesfull', 200)
-            next()
         } catch (error)
         {
             next(error)
@@ -42,7 +42,6 @@ export class AuthController {
                 .cookie('refreshToken', refreshToken, cookieOption)
                 .status(201)
                 .json({ message: "login succesfull" })
-            next()
         } catch (error)
         {
             next(error)
@@ -54,7 +53,6 @@ export class AuthController {
         {
             const loggedinUser = await this.authService.getLoogedInUser(req.user as JwtPayload)
             ResponseHandler.success(res, 'logged in user', loggedinUser, 200)
-            next()
         } catch (error)
         {
             next(error)
@@ -66,7 +64,7 @@ export class AuthController {
         try
         {
 
-            const payLoad = jwt.verify(tokenFromClient, config.JWT_SECRET) as JwtPayload
+            const payLoad = jwtHandler.verify(tokenFromClient, 'refresh') as JwtPayload
             const { id } = payLoad
             res.clearCookie('accessToken', cookieOption)
                 .clearCookie('refreshToken', cookieOption)
@@ -77,8 +75,6 @@ export class AuthController {
                 .cookie('refreshToken', refreshToken, cookieOption)
                 .status(200)
                 .json({ message: 'refresh successful' })
-            next()
-
         } catch (error: any)
         {
             next(new UnAuthorisedRequestError(error))
@@ -91,7 +87,6 @@ export class AuthController {
                 .clearCookie('refreshToken', cookieOption)
                 .status(200)
                 .json({ message: 'Log out successful' })
-            next()
         } catch (error)
         {
             next(error)

@@ -15,7 +15,7 @@ export const APP_CONTANTS = {
 
 export const cookieOption: CookieOptions = {
     httpOnly: true,
-    // secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "none",
     maxAge: 7 * 24 * 60 * 100,
     path: "/"

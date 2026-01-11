@@ -7,7 +7,7 @@ interface ApiResponse<T> {
     success: boolean;
     message: string;
     data?: T | null;
-    error?: string | null;
+    error?: Error | null;
     code?: string;
 }
 
@@ -21,7 +21,7 @@ class ResponseHandler {
         };
         return res.status(status).json(response);
     }
-    static error<T> (res: Response, message: string, status = 400, code?: string, error?: any): any {
+    static error<T> (res: Response, message: string, status = 400, code?: string, error?: Error): any {
         if (res.headersSent) return;
         const response: ApiResponse<T> = {
             success: false,

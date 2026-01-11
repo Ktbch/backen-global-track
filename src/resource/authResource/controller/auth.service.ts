@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import { UnAuthorisedRequestError } from "../../../utils/app-error";
 import { jwtHandler } from "../../../utils/Jwt-handle";
 import { JwtPayload } from "jsonwebtoken";
+import { SesssionRepository } from "../repository/session.repository";
 
 
 // TODO CREATE USER AND LOGIN USER AND LOGOUT USE WITH COOKIES. AND MIDDLEWARE FOR VALIDATION,  ROLE AND AUTHGUARD
@@ -12,9 +13,11 @@ import { JwtPayload } from "jsonwebtoken";
 // could have user email but decided to useId
 export class AuthService {
     userRepository: UserRepository
+    sessionRepository: SesssionRepository
 
     constructor () {
         this.userRepository = new UserRepository()
+        this.sessionRepository = new SesssionRepository()
     }
 
     async signUp (userInfo: createAccountDto) {
@@ -36,15 +39,25 @@ export class AuthService {
         const userFound = await this.userRepository.findUserByEmail(email)
 
 
-        console.log(userFound)
-        if (!userFound.email) throw new UnAuthorisedRequestError('invalid credentials')
-        console.log('hello')
-        const isPasswordMatch = bcrypt.compareSync(password, userFound.password)
-        console.log(isPasswordMatch)
+        if (!userFound) throw new UnAuthorisedRequestError('invalid credentials')
+        const isPasswordMatch = await bcrypt.compare(password, userFound.password)
+
         if (!isPasswordMatch)
             throw new UnAuthorisedRequestError('invalid credentials')
 
+
+
         const token = jwtHandler.generateToken(userFound.id)
+        const refreshToken = jwtHandler.generateRefreshToken()
+
+
+        // this.sessionRepository.createSession({
+        //     id: uuidv4(),
+        //     user_id: userFound.id,
+        //     refresh_token_hash: jwtHandler.hashToken(refreshToken),
+        //     ip:meta.ip
+        // })
+
         return token
     }
 

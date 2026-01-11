@@ -1,14 +1,19 @@
+// App-error.ts
+
 export class AppErr extends Error {
     statusCode: number
     status: string
-    isOperatoinal: boolean
-    constructor (message: string, statusCode: number) {
-
+    isOperational: boolean
+    code?: "AUTH_FAILED" | "VALIDATION_ERROR" | "DB_ERROR";
+    constructor (message: string, statusCode: number, code?: "AUTH_FAILED" | "VALIDATION_ERROR" | "DB_ERROR") {
         super(message)
         this.statusCode = statusCode
         this.status = `${ statusCode }`.startsWith('4') ? 'fail' : 'error'
-        this.isOperatoinal = true
+        this.isOperational = true
+        this.code = code
+        Object.setPrototypeOf(this, new.target.prototype);
     }
+
 }
 
 const notFoundDefaultMessage = 'Not found'

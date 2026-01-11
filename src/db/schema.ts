@@ -1,5 +1,6 @@
+// src/db/schema.ts
+
 import { mysqlTable, varchar, text, boolean, timestamp, uniqueIndex, decimal, int, json } from "drizzle-orm/mysql-core";
-import { time, timeStamp } from "node:console";
 
 export const appRole = [ 'customer', 'partner', 'admin_ng', 'admin_uk' ] as const;
 export const shipmentStatus = [
@@ -14,7 +15,7 @@ export const paymentProvider = [ 'paystack', 'stripe', 'bank_transfer' ] as cons
 export const profiles = mysqlTable('profiles', {
     id: varchar('id', { length: 36 }).primaryKey().notNull(), // UUID stored as string
     email: varchar('email', { length: 255 }).notNull(),
-    password: varchar('password', { length: 26 }).notNull(),
+    password: varchar('password', { length: 255 }).notNull(),
     full_name: varchar('full_name', { length: 255 }),
     phone: varchar('phone', { length: 50 }),
     company_name: varchar('company_name', { length: 255 }),
@@ -30,7 +31,7 @@ export const profiles = mysqlTable('profiles', {
 
 
 export const user_roles = mysqlTable('user_roles', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     user_id: varchar('user_id', { length: 36 }).references(() => profiles.id).notNull(),
     role: varchar('role', { length: 36 }).notNull(),// Use TypeScript AppRole type
     assigned_by: varchar('assigned_by', { length: 36 }),
@@ -41,7 +42,7 @@ export const user_roles = mysqlTable('user_roles', {
 
 
 export const shipments = mysqlTable('shipments', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     tracking_number: varchar('tracking_number', { length: 50 }).unique().notNull(),
     customer_id: varchar('customer_id', { length: 36 }),
     partner_id: varchar('partner_id', { length: 36 }),
@@ -107,7 +108,7 @@ export const shipment_items = mysqlTable('shipment_items', {
 
 
 export const tracking_events = mysqlTable('tracking_events', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     shipment_id: varchar('shipment_id', { length: 36 }).notNull(),
     status: varchar('status', { length: 30 }).notNull(),
     location: varchar('location', { length: 255 }).notNull(),
@@ -120,7 +121,7 @@ export const tracking_events = mysqlTable('tracking_events', {
 
 
 export const payments = mysqlTable('payments', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     shipment_id: varchar('shipment_id', { length: 36 }).notNull(),
     user_id: varchar('user_id', { length: 36 }).notNull(),
     amount: decimal('amount', { precision: 12, scale: 2 }).notNull(),
@@ -137,9 +138,9 @@ export const payments = mysqlTable('payments', {
 
 
 export const partner_commissions = mysqlTable('partner_commissions', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     partner_id: varchar('partner_id', { length: 36 }).notNull(),
-    shipment_id: varchar('shipment_id', { length: 36 }).notNull(),
+    shipment_id: varchar('shipment_id', { length: 36 }).references(() => shipments.id).notNull(),
     payment_id: varchar('payment_id', { length: 36 }),
     commission_rate: decimal('commission_rate', { precision: 5, scale: 2 }).default("10.00"),
     commission_amount: decimal('commission_amount', { precision: 12, scale: 2 }).notNull(),
@@ -150,8 +151,8 @@ export const partner_commissions = mysqlTable('partner_commissions', {
 });
 
 export const documents = mysqlTable('documents', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
-    shipment_id: varchar('shipment_id', { length: 36 }).notNull(),
+    id: varchar('id', { length: 36 }).primaryKey(),
+    shipment_id: varchar('shipment_id', { length: 36 }).references(() => shipments.id).notNull(),
     name: varchar('name', { length: 255 }).notNull(),
     type: varchar('type', { length: 100 }).notNull(),
     file_path: text('file_path').notNull(),
@@ -162,9 +163,9 @@ export const documents = mysqlTable('documents', {
 
 
 export const notifications = mysqlTable('notifications', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     user_id: varchar('user_id', { length: 36 }).notNull(),
-    shipment_id: varchar('shipment_id', { length: 36 }),
+    shipment_id: varchar('shipment_id', { length: 36 }).references(() => shipments.id),
     title: varchar('title', { length: 255 }).notNull(),
     message: text('message').notNull(),
     type: varchar('type', { length: 50 }).default('info'),
@@ -175,7 +176,7 @@ export const notifications = mysqlTable('notifications', {
 });
 
 export const system_settings = mysqlTable('system_settings', {
-    id: varchar('id', { length: 36 }).primaryKey().default('UUID()'),
+    id: varchar('id', { length: 36 }).primaryKey(),
     key: varchar('key', { length: 255 }).notNull(),
     value: json('value').notNull(),
     created_at: timestamp('created_at').defaultNow(),
@@ -183,3 +184,15 @@ export const system_settings = mysqlTable('system_settings', {
 }, (table) => ({
     uniqueKey: uniqueIndex('unique_key').on(table.key),
 }));
+
+
+export const sessions = mysqlTable('sessions', {
+    id: varchar('id', { length: 36 }).primaryKey(),
+    user_id: varchar('user_id', { length: 36 }).references(() => profiles.id).notNull(),
+    refresh_token_hash: varchar('refresh_token_hash', { length: 255 }).notNull(),
+    user_agent: text('user_agent'),
+    ip_address: varchar('ip_address', { length: 45 }),
+    expires_at: timestamp('expires_at').notNull(),
+    revoked_at: timestamp('revoked_at'),
+    created_at: timestamp('created_at').defaultNow(),
+});

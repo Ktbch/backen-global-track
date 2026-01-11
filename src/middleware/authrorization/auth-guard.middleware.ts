@@ -15,11 +15,11 @@ declare module 'express-serve-static-core' {
 export function authGuard (req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.accessToken
 
-    if (!token) throw new UnAuthorisedRequestError()
+    if (!token) next(new UnAuthorisedRequestError())
 
     try
     {
-        const decoded = jwt.verify(token, AppConfig.JWT_SECRET)
+        const decoded = jwt.verify(token, AppConfig.ACCESS_SECRET);
         req.user = decoded as JwtPayload
         next()
     } catch (error: any)
