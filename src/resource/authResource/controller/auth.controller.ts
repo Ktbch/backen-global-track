@@ -27,6 +27,7 @@ export class AuthController {
         {
             await this.authService.signUp(req.body as createAccountDto)
             ResponseHandler.success(res, 'Your Sign-up was succesfull', 200)
+            next()
         } catch (error)
         {
             next(error)
@@ -41,6 +42,7 @@ export class AuthController {
                 .cookie('refreshToken', refreshToken, cookieOption)
                 .status(201)
                 .json({ message: "login succesfull" })
+            next()
         } catch (error)
         {
             next(error)
@@ -52,6 +54,7 @@ export class AuthController {
         {
             const loggedinUser = await this.authService.getLoogedInUser(req.user as JwtPayload)
             ResponseHandler.success(res, 'logged in user', loggedinUser, 200)
+            next()
         } catch (error)
         {
             next(error)
@@ -74,6 +77,7 @@ export class AuthController {
                 .cookie('refreshToken', refreshToken, cookieOption)
                 .status(200)
                 .json({ message: 'refresh successful' })
+            next()
 
         } catch (error: any)
         {
@@ -87,6 +91,7 @@ export class AuthController {
                 .clearCookie('refreshToken', cookieOption)
                 .status(200)
                 .json({ message: 'Log out successful' })
+            next()
         } catch (error)
         {
             next(error)

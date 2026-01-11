@@ -16,7 +16,7 @@ export const checkRole = (role: TRoles) => async (req: Request, res: Response, n
         const userFound = await userRepository.getUserRole(id)
         if (!userFound) throw new UnAuthorisedRequestError()
         if (userFound.role !== role) throw new UnAuthorisedRequestError(`You must be a ${ role } to continue this request`)
-
+        next()
     } catch (error)
     {
         next(error)

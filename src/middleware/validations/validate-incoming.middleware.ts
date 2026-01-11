@@ -4,8 +4,7 @@ import { BadRequestError } from "../../utils/app-error";
 
 export const validateIncomingData = (schema: ZodObject) => (req: Request, res: Response, next: NextFunction) => {
     const validatedData = schema.safeParse(req.body)
-    if (validatedData.error) throw new BadRequestError()
+    if (validatedData.error) throw new BadRequestError(validatedData.error.message)
     req.body = validatedData.data
     next()
-
 }
