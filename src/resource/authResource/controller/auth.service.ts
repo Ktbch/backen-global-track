@@ -23,7 +23,7 @@ export class AuthService {
         const userId = uuidv4()
 
         const hadPassword = await bcrypt.hash(password, 10)
-        this.userRepository.createUser({
+        await this.userRepository.createUser({
             id: userId,
             email,
             password: hadPassword,
@@ -35,7 +35,13 @@ export class AuthService {
         const { email, password } = authDto
         const userFound = await this.userRepository.findUserByEmail(email)
 
-        if (!userFound || !(await bcrypt.compare(password, userFound.password)))
+
+        console.log(userFound)
+        if (!userFound.email) throw new UnAuthorisedRequestError('invalid credentials')
+        console.log('hello')
+        const isPasswordMatch = bcrypt.compareSync(password, userFound.password)
+        console.log(isPasswordMatch)
+        if (!isPasswordMatch)
             throw new UnAuthorisedRequestError('invalid credentials')
 
         const token = jwtHandler.generateToken(userFound.id)
