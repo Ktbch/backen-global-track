@@ -29,7 +29,7 @@ export class AuthController {
         {
             await this.authService.signUp(req.body as createAccountDto)
             ResponseHandler.success(res, 'Your Sign-up was succesfull', 200)
-        } catch (error)
+        } catch (error: any)
         {
             const nomalizedError = extractDbError(error)
             next(nomalizedError)

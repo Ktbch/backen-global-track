@@ -2,7 +2,7 @@ import { ConflictError, BadRequestError } from "./app-error";
 
 export function extractDbError (error: any): Error {
     // MySQL duplicate key
-    if (error?.code === "ER_DUP_ENTRY")
+    if (error.cause?.code === "ER_DUP_ENTRY")
     {
         if (error.sqlMessage?.includes("profiles_email_unique"))
         {
