@@ -8,6 +8,7 @@ import config from "../../../config.ts/config";
 import jwt from "jsonwebtoken";
 import { jwtHandler } from "../../../utils/Jwt-handle";
 import { UnAuthorisedRequestError } from "../../../utils/app-error";
+import { extractDbError } from "../../../utils/extract-db-error";
 
 
 
@@ -30,7 +31,8 @@ export class AuthController {
             ResponseHandler.success(res, 'Your Sign-up was succesfull', 200)
         } catch (error)
         {
-            next(error)
+            const nomalizedError = extractDbError(error)
+            next(nomalizedError)
         }
     }
 

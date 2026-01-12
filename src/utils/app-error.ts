@@ -22,6 +22,14 @@ export class NotFoundError extends AppErr {
         super(message, 404)
     }
 }
+
+
+export class ConflictError extends AppErr {
+    constructor (message: string) {
+        super(message, 409);
+    }
+}
+
 const badRequestDefaultMessage = 'Bad Request'
 export class BadRequestError extends AppErr {
     constructor (message = badRequestDefaultMessage) {
