@@ -30,9 +30,9 @@ export const profiles = mysqlTable(
         created_at: timestamp("created_at").defaultNow(),
         updated_at: timestamp("updated_at").defaultNow(),
     },
-    (table) => ({
-        emailUnique: uniqueIndex("profiles_email_unique").on(table.email),
-    })
+    (table) => ([
+        uniqueIndex("profiles_email_unique").on(table.email),
+    ])
 );
 
 export const user_roles = mysqlTable('user_roles', {
@@ -41,9 +41,9 @@ export const user_roles = mysqlTable('user_roles', {
     role: varchar('role', { length: 36 }).notNull(),// Use TypeScript AppRole type
     assigned_by: varchar('assigned_by', { length: 36 }),
     assigned_at: timestamp('assigned_at').defaultNow(),
-}, (table) => ({
-    uniqueUserRole: uniqueIndex('unique_user_role').on(table.user_id, table.role),
-}));
+}, (table) => ([
+    uniqueIndex('unique_user_role').on(table.user_id, table.role),
+]));
 
 
 export const shipments = mysqlTable('shipments', {
