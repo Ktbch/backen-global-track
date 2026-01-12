@@ -5,6 +5,7 @@ import { AppErr } from "./utils/app-error";
 import { ResponseHandler } from "./utils/response-handler";
 import cookieParser from "cookie-parser";
 import { authRoute } from "./resource/authResource/routes/auth.routes";
+import { BASE_URL } from "./constants";
 
 
 const app = express();
@@ -23,7 +24,7 @@ app.use(express.json());
 app.get("/hello", (req, res) => {
     res.send("API is running...");
 });
-app.use('/api/v1', authRoute);
+app.use(BASE_URL, authRoute);
 
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

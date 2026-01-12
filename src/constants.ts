@@ -1,6 +1,8 @@
 import { CookieOptions } from "express"
 
 
+export const BASE_URL = "/global-tracker/api/v1"
+
 export const APP_CONTANTS = {
     authEndPoints: {
         login: '/login',
