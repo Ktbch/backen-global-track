@@ -8,6 +8,8 @@ export const shipmentRoute = Router()
 const shipmentController = new ShipController()
 
 shipmentRoute.get(APP_CONTANTS.shipmentEndPoints.shipment, authGuard, shipmentController.handleGetUserShipment)
+shipmentRoute.get(APP_CONTANTS.shipmentEndPoints.shipmentByTrackingNumber, authGuard, shipmentController.handleGetUserShipmentByTrackingNumber)
+
 shipmentRoute.post(APP_CONTANTS.shipmentEndPoints.createShipments, authGuard, shipmentController.handleCreateShipment)
 shipmentRoute.post(APP_CONTANTS.shipmentEndPoints.createShipmentItems, authGuard, shipmentController.handleCreateShipmentItem)
 

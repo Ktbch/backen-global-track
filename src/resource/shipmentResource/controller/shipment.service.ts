@@ -51,6 +51,9 @@ export class ShipmentService {
         const { id } = payload
         return await this.shipmentRepository.getUserShipments(id)
     }
+    async getShipmentByTrackingNumber (id: string) {
+        return await this.shipmentRepository.getShipmentByTrackingNumber(id)
+    }
 
     async createUserShipment (payload: JwtPayload, data: createShipmentDto) {
         const status = data.status as string
