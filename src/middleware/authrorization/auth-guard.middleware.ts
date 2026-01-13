@@ -17,6 +17,7 @@ export function authGuard (req: Request, res: Response, next: NextFunction) {
 
     if (!token) next(new UnAuthorisedRequestError())
 
+
     try
     {
         const decoded = jwt.verify(token, AppConfig.ACCESS_SECRET);

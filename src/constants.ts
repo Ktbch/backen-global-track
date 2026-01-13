@@ -17,7 +17,8 @@ export const APP_CONTANTS = {
     shipmentEndPoints: {
         shipment: '/shipment',
         createShipments: '/shipment/create-shipment',
-        createShipmentItems: '/shipment/create-shipment-items'
+        createShipmentItems: '/shipment/create-shipment-items',
+        shipmentByTrackingNumber: "/shipment/:id"
     }
 
 }
@@ -25,7 +26,7 @@ export const APP_CONTANTS = {
 
 export const cookieOption: CookieOptions = {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
     maxAge: 7 * 24 * 60 * 100,
     path: "/"

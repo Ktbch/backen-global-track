@@ -21,6 +21,20 @@ export class ShipController {
             next(error)
         }
     }
+
+    handleGetUserShipmentByTrackingNumber = async (req: Request, res: Response, next: NextFunction) => {
+        try
+        {
+            const { id } = req.params
+            console.log(id)
+            const shipmentDetails = await this.shipmentService.getShipmentByTrackingNumber(id)
+            res.status(200).json(shipmentDetails)
+        } catch (error)
+        {
+
+            next(error)
+        }
+    }
     handleCreateShipment = async (req: Request, res: Response, next: NextFunction) => {
         try
         {
