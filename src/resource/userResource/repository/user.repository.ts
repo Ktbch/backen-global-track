@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../../../db";
 import { profiles, user_roles } from "../../../db/schema";
 import { v4 as uuidv4 } from 'uuid'
+import { email } from "zod";
 
 
 
@@ -29,7 +30,7 @@ export class UserRepository {
         return users[ 0 ] ?? null
     }
     async findUserById (id: string) {
-        const users = await this.db.select().from(profiles).where(eq(profiles.id, id))
+        const users = await this.db.select({ email: profiles.email, fullName: profiles.full_name }).from(profiles).where(eq(profiles.id, id))
         return users[ 0 ] ?? null
     }
     async getUserRoles (id: string) {

@@ -4,9 +4,7 @@ import { AuthDto, createAccountDto } from "../../../lib/zod.schema";
 import { ResponseHandler } from "../../../utils/response-handler";
 import { JwtPayload } from "jsonwebtoken";
 import { cookieOption } from "../../../constants";
-import config from "../../../config.ts/config";
-import jwt from "jsonwebtoken";
-import { jwtHandler } from "../../../utils/Jwt-handle";
+
 import { UnAuthorisedRequestError } from "../../../utils/app-error";
 import { extractDbError } from "../../../utils/extract-db-error";
 import { extractSessionMeta } from "../../../utils/extract-session-meta";
