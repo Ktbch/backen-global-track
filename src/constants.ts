@@ -10,6 +10,14 @@ export const APP_CONTANTS = {
         logout: '/auth/logout',
         me: '/auth/me',
         refresh: '/auth/refresh'
+    },
+    userEndPoints: {
+        profileDetails: '/profile'
+    },
+    shipmentEndPoints: {
+        shipment: '/shipment',
+        createShipments: '/shipment/create-shipment',
+        createShipmentItems: '/shipment/create-shipment-items'
     }
 
 }
