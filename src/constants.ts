@@ -25,7 +25,7 @@ export const APP_CONTANTS = {
 
 export const cookieOption: CookieOptions = {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: "none",
     maxAge: 7 * 24 * 60 * 100,
     path: "/"
