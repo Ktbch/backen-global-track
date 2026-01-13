@@ -28,13 +28,15 @@ export const createShipmentSchema = z.object({
     status: z.enum(shipmentStatus)
 })
 
-const createShipmentItemSchema = z.object({
-    shipmenId: z.string(),
+const ShipmentItemSchema = z.object({
+    shipmentId: z.string(),
     description: z.string(),
     quantity: z.number(),
     weightKg: z.number(),
     declaredValueNgn: z.number(),
 })
+
+export const ListOFShipmentSchema = z.array(ShipmentItemSchema)
 
 
 export const authSchema = z.object({
@@ -51,4 +53,5 @@ export const createAccountSchema = authSchema.extend({
 export type AuthDto = z.infer<typeof authSchema>
 export type createAccountDto = z.infer<typeof createAccountSchema>
 export type createShipmentDto = z.infer<typeof createShipmentSchema>
-export type createShipmentItemsDto = z.infer<typeof createShipmentItemSchema>
+export type createShipmentItemsDto = z.infer<typeof ListOFShipmentSchema>
+export type shipmentItemDto = z.infer<typeof ShipmentItemSchema>
