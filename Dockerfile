@@ -13,9 +13,6 @@ RUN npm ci --only=production=false
 # Copy source code
 COPY . .
 
-# Run database migrations
-RUN npm run db:push
-
 # Build the application
 RUN npm run build
 
