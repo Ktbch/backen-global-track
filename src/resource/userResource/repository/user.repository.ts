@@ -1,9 +1,8 @@
-import { eq } from "drizzle-orm";
+import { eq, InferInsertModel } from "drizzle-orm";
 import { db } from "../../../db";
 import { profiles, user_roles } from "../../../db/schema";
 import { v4 as uuidv4 } from 'uuid'
-import { email } from "zod";
-import { count } from "node:console";
+    ;
 
 
 
@@ -13,6 +12,8 @@ type UserDto = {
     email: string,
     password: string,
 }
+
+export type TProfileData = InferInsertModel<typeof profiles>
 
 export class UserRepository {
     db: typeof db
@@ -47,5 +48,9 @@ export class UserRepository {
     }
     async defaultRole (userId: string) {
         await this.db.insert(user_roles).values({ user_id: userId, role: 'customer', id: uuidv4() })
+    }
+
+    async updateUserProfile (userId: string, profileData: TProfileData) {
+        await this.db.update(profiles).set(profileData).where(eq(profiles.id, userId))
     }
 }
