@@ -10,6 +10,6 @@ export default defineConfig({
     schema: './src/db/schema.ts',
     dialect: 'mysql',
     dbCredentials: {
-        url: "mysql://u815137624_kay:Bethel34x@srv512.hstgr.io:3306/u815137624_kay",
+        url: process.env.DATABSE_URL!,
     },
 });
