@@ -1,8 +1,8 @@
 // src/app.ts
 import express from "express";
 import cors from "cors";
-import { AppErr } from "./utils/app-error";
-import { ResponseHandler } from "./utils/response-handler";
+// import { AppErr } from "./utils/app-error";
+// import { ResponseHandler } from "./utils/response-handler";
 import cookieParser from "cookie-parser";
 // import { authRoute } from "./resource/authResource/routes/auth.routes";
 // import { BASE_URL } from "./constants";
