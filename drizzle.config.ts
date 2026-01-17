@@ -3,6 +3,7 @@
 import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
+console.log(process.env.DATABSE_URL)
 
 export default defineConfig({
     out: './drizzle',
