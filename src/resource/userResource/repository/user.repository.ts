@@ -47,7 +47,7 @@ export class UserRepository {
         return userRole[ 0 ] ?? null
     }
     async defaultRole (userId: string) {
-        await this.db.insert(user_roles).values({ user_id: userId, role: 'admin_ng', id: uuidv4() })
+        await this.db.insert(user_roles).values({ user_id: userId, role: 'customer', id: uuidv4() })
     }
 
     async updateUserProfile (userId: string, profileData: TProfileData) {
