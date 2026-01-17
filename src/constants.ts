@@ -1,4 +1,4 @@
-import { CookieOptions } from "express"
+// import { CookieOptions } from "express"
 // import { profile } from "node:console"
 
 
@@ -31,10 +31,10 @@ export const APP_CONTANTS = {
 }
 
 
-export const cookieOption: CookieOptions = {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 7 * 24 * 60 * 100,
-    path: "/"
-}
+// export const cookieOption: CookieOptions = {
+//     httpOnly: true,
+//     secure: true,
+//     sameSite: "none",
+//     maxAge: 7 * 24 * 60 * 100,
+//     path: "/"
+// }

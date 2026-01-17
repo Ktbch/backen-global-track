@@ -40,13 +40,13 @@ app.get("/hello", (req, res) => {
 // app.use(BASE_URL, shipmentRoute)
 // app.use(BASE_URL, adminRoutes)
 
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    if (err instanceof AppErr)
-    {
-        return ResponseHandler.error(res, err.message, err.statusCode);
-    }
-    return ResponseHandler.error(res, `Internal server error and hello ${ err }`, 500);
-});
+// app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+//     if (err instanceof AppErr)
+//     {
+//         return ResponseHandler.error(res, err.message, err.statusCode);
+//     }
+//     return ResponseHandler.error(res, `Internal server error and hello ${ err }`, 500);
+// });
 
 
 export default app;
