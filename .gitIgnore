@@ -2,10 +2,3 @@ node_modules
 dist
 .env
 drizzle
-src/lib/
-src/middleware/
-src/resource/
-src/services
-src/types
-src/utils/
-

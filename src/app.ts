@@ -1,16 +1,16 @@
 // src/app.ts
 import express from "express";
 import cors from "cors";
-// import { AppErr } from "./utils/app-error";
-// import { ResponseHandler } from "./utils/response-handler";
+import { AppErr } from "./utils/app-error";
+import { ResponseHandler } from "./utils/response-handler";
 import cookieParser from "cookie-parser";
-// import { authRoute } from "./resource/authResource/routes/auth.routes";
-// import { BASE_URL } from "./constants";
+import { authRoute } from "./resource/authResource/routes/auth.routes";
+import { BASE_URL } from "./constants";
 import { db } from "./db";
 import { profiles } from "./db/schema";
-// import { userRoutes } from "./resource/userResource/routes/user.routes";
-// import { shipmentRoute } from "./resource/shipmentResource/route/shipments.routes";
-// import { adminRoutes } from "./resource/adminResource/routes/admin.routes";
+import { userRoutes } from "./resource/userResource/routes/user.routes";
+import { shipmentRoute } from "./resource/shipmentResource/route/shipments.routes";
+import { adminRoutes } from "./resource/adminResource/routes/admin.routes";
 
 
 const app = express();
