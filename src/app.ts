@@ -35,10 +35,10 @@ app.get('/test', async (req, res) => {
     res.json(users);
 })
 
-app.use(BASE_URL, authRoute);
-app.use(BASE_URL, userRoutes)
-app.use(BASE_URL, shipmentRoute)
-app.use(BASE_URL, adminRoutes)
+// app.use(BASE_URL, authRoute);
+// app.use(BASE_URL, userRoutes)
+// app.use(BASE_URL, shipmentRoute)
+// app.use(BASE_URL, adminRoutes)
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (err instanceof AppErr)
